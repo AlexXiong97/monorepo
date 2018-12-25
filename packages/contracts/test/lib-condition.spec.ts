@@ -1,40 +1,31 @@
-import { Contract, ContractFactory } from "ethers";
+import * as waffle from "ethereum-waffle";
+import { Contract, ethers } from "ethers";
 import { HashZero } from "ethers/constants";
-import { JsonRpcSigner, Web3Provider } from "ethers/providers";
-import { defaultAbiCoder, keccak256, solidityKeccak256 } from "ethers/utils";
+
+import ExampleCondition from "../build/ExampleCondition.json";
+import LibCondition from "../build/LibCondition.json";
+import LibStaticCall from "../build/LibStaticCall.json";
 
 import { expect } from "./utils";
 
-const provider = new Web3Provider((global as any).web3.currentProvider);
+const { keccak256, defaultAbiCoder, solidityKeccak256 } = ethers.utils;
 
-contract("LibCondition", (accounts: string[]) => {
-  let unlockedAccount: JsonRpcSigner;
+describe("LibCondition", () => {
+  let provider: ethers.providers.Web3Provider;
+  let wallet: ethers.Wallet;
 
   let exampleCondition: Contract;
   let libCondition: Contract;
 
   before(async () => {
-    unlockedAccount = await provider.getSigner(accounts[0]);
+    provider = waffle.createMockProvider();
+    wallet = (await waffle.getWallets(provider))[0];
 
-    const libConditionArtifact = artifacts.require("LibCondition");
-    const exampleConditionArtifact = artifacts.require("ExampleCondition");
+    const libStaticCall = await waffle.deployContract(wallet, LibStaticCall);
+    waffle.link(LibCondition, "LibStaticCall", libStaticCall.address);
 
-    libConditionArtifact.link(artifacts.require("LibStaticCall"));
-
-    exampleCondition = await new ContractFactory(
-      exampleConditionArtifact.abi,
-      exampleConditionArtifact.bytecode,
-      unlockedAccount
-    ).deploy({ gasLimit: 6e9 });
-
-    libCondition = await new ContractFactory(
-      libConditionArtifact.abi,
-      libConditionArtifact.binary,
-      unlockedAccount
-    ).deploy({ gasLimit: 6e9 });
-
-    await exampleCondition.deployed();
-    await libCondition.deployed();
+    libCondition = await waffle.deployContract(wallet, LibCondition);
+    exampleCondition = await waffle.deployContract(wallet, ExampleCondition);
   });
 
   describe("asserts conditions with no params", () => {
