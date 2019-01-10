@@ -47,6 +47,6 @@
     "truffle-hdwallet-provider": "1.0.2",
     "ts-node": "^7.0.0",
     "tslint": "5.12.0",
-    "zos-lib": "^2.0.0"
+    "zos-lib": "^2.1.0"
   }
 }
