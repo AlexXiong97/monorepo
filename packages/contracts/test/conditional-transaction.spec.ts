@@ -32,8 +32,17 @@ describe("ConditionalTransaction", () => {
     const transfer = await waffle.deployContract(wallet, Transfer);
     const libStaticCall = await waffle.deployContract(wallet, LibStaticCall);
 
-    waffle.link(ConditionalTransaction, "Transfer", transfer.address);
-    waffle.link(ConditionalTransaction, "LibStaticCall", libStaticCall.address);
+    waffle.link(
+      ConditionalTransaction,
+      "contracts/libs/Transfer.sol:Transfer",
+      transfer.address
+    );
+
+    waffle.link(
+      ConditionalTransaction,
+      "contracts/libs/LibStaticCall.sol:LibStaticCall",
+      libStaticCall.address
+    );
 
     conditionalTransaction = await waffle.deployContract(
       wallet,
@@ -44,7 +53,10 @@ describe("ConditionalTransaction", () => {
   });
 
   describe("Pre-commit to transfer details", () => {
-    const makeCondition = (expectedValue, onlyCheckForSuccess) => ({
+    const makeCondition = (
+      expectedValue: string,
+      onlyCheckForSuccess: boolean
+    ) => ({
       onlyCheckForSuccess,
       expectedValueHash: solidityKeccak256(["bytes"], [expectedValue]),
       parameters: HashZero,
@@ -52,7 +64,7 @@ describe("ConditionalTransaction", () => {
       to: exampleCondition.address
     });
 
-    const makeConditionParam = (expectedValue, parameters) => ({
+    const makeConditionParam = (expectedValue: string, parameters: string) => ({
       parameters,
       expectedValueHash: solidityKeccak256(["bytes"], [expectedValue]),
       onlyCheckForSuccess: false,

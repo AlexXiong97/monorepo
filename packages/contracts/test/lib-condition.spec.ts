@@ -22,14 +22,21 @@ describe("LibCondition", () => {
     wallet = (await waffle.getWallets(provider))[0];
 
     const libStaticCall = await waffle.deployContract(wallet, LibStaticCall);
-    waffle.link(LibCondition, "LibStaticCall", libStaticCall.address);
+    waffle.link(
+      LibCondition,
+      "contracts/libs/LibStaticCall.sol:LibStaticCall",
+      libStaticCall.address
+    );
 
     libCondition = await waffle.deployContract(wallet, LibCondition);
     exampleCondition = await waffle.deployContract(wallet, ExampleCondition);
   });
 
   describe("asserts conditions with no params", () => {
-    const makeCondition = (expectedValue, onlyCheckForSuccess) => ({
+    const makeCondition = (
+      expectedValue: string,
+      onlyCheckForSuccess: boolean
+    ) => ({
       onlyCheckForSuccess,
       expectedValueHash: keccak256(expectedValue),
       parameters: HashZero,
@@ -60,7 +67,11 @@ describe("LibCondition", () => {
   });
 
   describe("asserts conditions with params", () => {
-    const makeCondition = (expectedValue, parameters, onlyCheckForSuccess) => ({
+    const makeCondition = (
+      expectedValue: string,
+      parameters: string,
+      onlyCheckForSuccess: boolean
+    ) => ({
       onlyCheckForSuccess,
       parameters,
       expectedValueHash: solidityKeccak256(["bytes"], [expectedValue]),
