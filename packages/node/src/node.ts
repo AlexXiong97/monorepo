@@ -1,9 +1,3 @@
-import {
-  InstructionExecutor,
-  Opcode,
-  Protocol,
-  ProtocolMessage
-} from "@counterfactual/machine";
 import { NetworkContext, Node as NodeTypes } from "@counterfactual/types";
 import { BaseProvider } from "ethers/providers";
 import { SigningKey } from "ethers/utils";
@@ -13,6 +7,12 @@ import { Memoize } from "typescript-memoize";
 
 import AutoNonceWallet from "./auto-nonce-wallet";
 import { Deferred } from "./deferred";
+import {
+  InstructionExecutor,
+  Opcode,
+  Protocol,
+  ProtocolMessage
+} from "./machine";
 import { configureNetworkContext } from "./network-configuration";
 import { RequestHandler } from "./request-handler";
 import { IMessagingService, IStoreService } from "./services";
@@ -111,6 +111,7 @@ export class Node {
   private async asynchronouslySetupUsingRemoteServices(): Promise<Node> {
     this.signer = await getHDNode(this.storeService);
     console.log(`Node signer address: ${this.signer.address}`);
+    console.log(`Node public identifier: ${this.publicIdentifier}`);
     this.requestHandler = new RequestHandler(
       this.publicIdentifier,
       this.incoming,

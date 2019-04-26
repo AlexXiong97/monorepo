@@ -1,13 +1,7 @@
 import {
-  AppInstance,
-  StateChannel,
-  StateChannelJSON,
-  Transaction
-} from "@counterfactual/machine";
-import {
   Address,
   AppInstanceInfo,
-  SolidityABIEncoderV2Struct
+  SolidityABIEncoderV2Type
 } from "@counterfactual/types";
 import { defaultAbiCoder, keccak256, solidityKeccak256 } from "ethers/utils";
 
@@ -20,6 +14,12 @@ import {
   DB_NAMESPACE_OWNERS_HASH_TO_MULTISIG_ADDRESS,
   DB_NAMESPACE_WITHDRAWALS
 } from "./db-schema";
+import {
+  AppInstance,
+  StateChannel,
+  StateChannelJSON,
+  Transaction
+} from "./machine";
 import { ERRORS } from "./methods/errors";
 import { ProposedAppInstanceInfo, ProposedAppInstanceInfoJSON } from "./models";
 import { debugLog } from "./node";
@@ -142,7 +142,7 @@ export class Store {
    */
   public async saveAppInstanceState(
     appInstanceId: string,
-    newState: SolidityABIEncoderV2Struct
+    newState: SolidityABIEncoderV2Type
   ) {
     const channel = await this.getChannelFromAppInstanceID(appInstanceId);
     const updatedChannel = await channel.setState(appInstanceId, newState);

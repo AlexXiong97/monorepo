@@ -1,9 +1,4 @@
-import {
-  InstructionExecutor,
-  StateChannel,
-  xkeysToSortedKthAddresses
-} from "@counterfactual/machine";
-import { AssetType } from "@counterfactual/types";
+import { AssetType, ETHBucketAppState } from "@counterfactual/types";
 import { Wallet } from "ethers";
 import { HashZero, Zero } from "ethers/constants";
 import { BaseProvider } from "ethers/providers";
@@ -11,6 +6,11 @@ import { hexlify, randomBytes } from "ethers/utils";
 import { fromMnemonic } from "ethers/utils/hdnode";
 import { anything, instance, mock, when } from "ts-mockito";
 
+import {
+  InstructionExecutor,
+  StateChannel,
+  xkeysToSortedKthAddresses
+} from "../../src/machine";
 import { install } from "../../src/methods/app-instance/install/operation";
 import { ERRORS } from "../../src/methods/errors";
 import { Store } from "../../src/store";
@@ -96,7 +96,8 @@ describe("Can handle correct & incorrect installs", () => {
       hdnodes.map(x => x.neuter().extendedKey)
     );
 
-    const fbState = stateChannel.getFreeBalanceFor(AssetType.ETH).state;
+    const fbState = stateChannel.getFreeBalanceFor(AssetType.ETH)
+      .state as ETHBucketAppState;
 
     expect(fbState.alice === signingKeys[0]);
     expect(fbState.bob === signingKeys[1]);

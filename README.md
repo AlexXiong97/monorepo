@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://circleci.com/gh/counterfactual/monorepo"><img src="https://circleci.com/gh/counterfactual/monorepo.svg?style=shield&circle-token=adc9e1576b770585a350141b2a90fc3d68bc048c" alt="circleci"></a>
   <a href="https://counterfactual.com/chat"><img src="https://img.shields.io/discord/500370633901735947.svg"/></a>
-  <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/counterfactual/monorepo.svg?token=62c4bef4c3c26412e67360cc4a193492b9561901a499761d65b76a22b65efb16&ts=1540411566259"/></a>
+  <a href="https://github.com/renovatebot/renovate"><img src="https://badges.renovateapi.com/github/counterfactual/monorepo"/></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license"></a>
 </p>
 <br>
@@ -51,8 +51,6 @@ You can learn more about what state channels are by reading [our whitepaper](htt
 | [`@counterfactual/node`](/packages/node)                   | [![npm](https://img.shields.io/npm/v/@counterfactual/node.svg)](https://www.npmjs.com/package/@counterfactual/node)                   | The core state channels client that a user runs                  |
 | [`@counterfactual/cf.js`](/packages/cf.js)                 | [![npm](https://img.shields.io/npm/v/@counterfactual/cf.js.svg)](https://www.npmjs.com/package/@counterfactual/cf.js)                 | A JS API for interacting with off-chain apps                     |
 | [`@counterfactual/node-provider`](/packages/node-provider) | [![npm](https://img.shields.io/npm/v/@counterfactual/node-provider.svg)](https://www.npmjs.com/package/@counterfactual/node-provider) | Wrapper around API calls to a Node                               |
-| [`@counterfactual/machine`](/packages/machine)             | [![npm](https://img.shields.io/npm/v/@counterfactual/machine.svg)](https://www.npmjs.com/package/@counterfactual/machine)             | Extendible middleware-based executor of Counterfactual protocols |
-
 **Utilities**
 
 | Package                                                              | Version                                                                                                                                         | Description                        |
@@ -81,6 +79,13 @@ yarn
 ```
 
 ### Building packages
+
+It is recommended (optional) that you installed `solc` compiler binary on your machine
+([installation guide](https://solidity.readthedocs.io/en/latest/installing-solidity.html#binary-packages)) and specify the following in your `.env` under `contracts` and `apps`
+
+```shell
+NATIVE_SOLC=true
+```
 
 To build all packages:
 

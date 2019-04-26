@@ -1,21 +1,22 @@
 import {
-  AppInstance,
-  StateChannel,
-  xkeyKthAddress,
-  xkeysToSortedKthAddresses
-} from "@counterfactual/machine";
-import {
   Address,
   AppABIEncodings,
   AppInstanceInfo,
   AppInterface,
   BlockchainAsset,
   Bytes32,
-  SolidityABIEncoderV2Struct,
+  SolidityABIEncoderV2Type,
   Terms
 } from "@counterfactual/types";
 import { AddressZero } from "ethers/constants";
 import { BigNumber, bigNumberify } from "ethers/utils";
+
+import {
+  AppInstance,
+  StateChannel,
+  xkeyKthAddress,
+  xkeysToSortedKthAddresses
+} from "../machine";
 
 export interface IProposedAppInstanceInfo {
   appId: Address;
@@ -24,7 +25,7 @@ export interface IProposedAppInstanceInfo {
   myDeposit: BigNumber;
   peerDeposit: BigNumber;
   timeout: BigNumber;
-  initialState: SolidityABIEncoderV2Struct;
+  initialState: SolidityABIEncoderV2Type;
   proposedByIdentifier: string;
   proposedToIdentifier: string;
   intermediaries?: string[];
@@ -38,7 +39,7 @@ export interface ProposedAppInstanceInfoJSON {
   myDeposit: string;
   peerDeposit: string;
   timeout: string;
-  initialState: SolidityABIEncoderV2Struct;
+  initialState: SolidityABIEncoderV2Type;
   proposedByIdentifier: string;
   proposedToIdentifier: string;
   intermediaries?: string[];
@@ -47,7 +48,7 @@ export interface ProposedAppInstanceInfoJSON {
 /**
  * The @counterfactual/cf.js package has a concept of an `AppInstanceInfo`:
  * https://github.com/counterfactual/monorepo/blob/master/packages/cf.js/API_REFERENCE.md#data-type-appinstanceinfo.
- * This is a simplified, client-side representation of what the @counterfactual/machine package calls an `AppInstance`.
+ * This is a simplified, client-side representation of what the machine calls an `AppInstance`.
  *
  * When an `AppInstanceInfo` is proposed to be installed by a client running the `cf.js`
  * package, the Node receives some state indicating the parameters of the proposal.
@@ -62,7 +63,7 @@ export class ProposedAppInstanceInfo implements AppInstanceInfo {
   myDeposit: BigNumber;
   peerDeposit: BigNumber;
   timeout: BigNumber;
-  initialState: SolidityABIEncoderV2Struct;
+  initialState: SolidityABIEncoderV2Type;
   proposedByIdentifier: string;
   proposedToIdentifier: string;
   intermediaries?: string[];
