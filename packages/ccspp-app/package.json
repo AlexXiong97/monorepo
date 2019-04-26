@@ -10,7 +10,7 @@
     "build"
   ],
   "scripts": {
-    "build": "waffle waffle.json",
+    "build": "waffle waffle.js",
     "migrate": "./scripts/migrate.sh",
     "migrate:kovan": "truffle migrate --network=kovan & apply-registry",
     "test": "ts-mocha test/*",
