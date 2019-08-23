@@ -27,10 +27,10 @@
   "devDependencies": {
     "@stencil/sass": "0.1.1",
     "@types/jest": "23.3.14",
-    "@types/puppeteer": "1.12.3",
+    "@types/puppeteer": "1.19.1",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
-    "puppeteer": "1.14.0",
+    "puppeteer": "1.19.0",
     "typescript": "3.4.5",
     "workbox-build": "3.4.1"
   }
